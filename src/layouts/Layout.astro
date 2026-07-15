@@ -1,0 +1,28 @@
+---
+import '../styles/global.css';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = `${siteConfig.businessName} — ${siteConfig.tagline}. Handmade macramé wall hangings, gifts and custom pieces, made in the UK.`,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <meta name="description" content={description} />
+    <title>{title} | {siteConfig.businessName}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

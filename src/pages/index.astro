@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SocialButton from '../components/SocialButton.astro';
+import { siteConfig } from '../config/site';
+---
+
+<Layout title="Home">
+  <Header />
+
+  <main>
+    <section class="hero container">
+      <h1>{siteConfig.businessName}</h1>
+      <p class="hero__tagline">{siteConfig.tagline}</p>
+    </section>
+
+    <section class="showcase container" aria-label="Featured wall hanging">
+      {/*
+        This is a real photo from public/images. To feature a
+        different piece, change the file name below — see the
+        README for the full list of images available.
+      */}
+      <img
+        src="/images/textured_hanging.jpeg"
+        alt="A handmade macramé wall hanging by Knot Perfect, featuring layered cream, tan and black fringing"
+        class="showcase__image"
+        width="1600"
+        height="1200"
+      />
+    </section>
+
+    <section class="intro container">
+      <p>
+        I make handmade macramé wall hangings, gifts and custom pieces,
+        knotted by hand in the UK using natural cotton cord. Every piece is
+        made with care, one knot at a time.
+      </p>
+    </section>
+
+    <section class="cta container" aria-label="Find us online">
+      <div class="button-group">
+        <SocialButton href={siteConfig.etsyUrl} label="Shop on Etsy" variant="primary" />
+        <SocialButton href={siteConfig.facebookUrl} label="Find us on Facebook" variant="outline" />
+      </div>
+      <p class="cta__email">
+        Or email me directly:
+        <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
+      </p>
+    </section>
+
+    <section class="coming-soon container">
+      <p>Full website coming soon — thank you for your patience!</p>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding-block: 2.5rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 2.25rem;
+  }
+
+  .hero__tagline {
+    color: var(--color-text-muted);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .showcase {
+    padding-block: 1rem;
+  }
+
+  .showcase__image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 8px 24px rgba(62, 51, 43, 0.12);
+  }
+
+  .intro {
+    padding-block: 2rem;
+    max-width: 40rem;
+    font-size: 1.05rem;
+  }
+
+  .cta {
+    padding-block: 1.5rem;
+  }
+
+  .cta__email {
+    margin-top: 1rem;
+    color: var(--color-text-muted);
+  }
+
+  .coming-soon {
+    padding-block: 2rem 3rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 40rem) {
+    .hero h1 {
+      font-size: 3rem;
+    }
+  }
+</style>

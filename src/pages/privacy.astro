@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { siteConfig } from '../config/site';
+---
+
+<Layout title="Privacy">
+  <Header />
+
+  <main class="container privacy">
+    <h1>Privacy policy</h1>
+
+    <p>
+      <em
+        >This is placeholder text. Please replace it with a privacy policy
+        that accurately describes how {siteConfig.businessName} collects and
+        uses information, once the full website (and any order or contact
+        forms) is built.</em
+      >
+    </p>
+
+    <h2>Who we are</h2>
+    <p>
+      This website is run by {siteConfig.businessName}, a UK handmade
+      macramé business.
+    </p>
+
+    <h2>Contacting us</h2>
+    <p>
+      If you contact us by email at
+      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a
+      >, we will use your email address only to reply to you.
+    </p>
+
+    <h2>Shopping with us</h2>
+    <p>
+      Purchases are currently handled entirely through our Etsy shop. Etsy's
+      own privacy policy applies to any orders placed there.
+    </p>
+
+    <h2>Cookies</h2>
+    <p>
+      This website does not currently use cookies or any analytics or
+      tracking tools.
+    </p>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .privacy {
+    padding-block: 2rem 3rem;
+    max-width: 42rem;
+  }
+</style>
