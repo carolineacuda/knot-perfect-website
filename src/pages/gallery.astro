@@ -1,0 +1,246 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { galleryCategories, galleryItems } from '../data/gallery';
+import { siteConfig } from '../config/site';
+
+function buildEnquiryMailto(subject: string, intro: string) {
+  const body = [
+    'Hi Knot Perfect,',
+    '',
+    intro,
+    '',
+    'Colour(s): ',
+    'Approximate size: ',
+    'Time frame needed by: ',
+    '',
+    'Thanks!',
+  ].join('\r\n');
+
+  return `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+---
+
+<Layout title="Gallery" description="A collection of handmade macramé wall hangings, gifts and custom pieces by Knot Perfect.">
+  <Header />
+
+  <main class="container gallery-page">
+    <header class="page-header">
+      <p class="eyebrow">Portfolio</p>
+      <h1>Gallery</h1>
+      <p>
+        These are examples of previous work. Colours, sizes and designs can
+        be discussed for custom commissions.
+      </p>
+    </header>
+
+    <nav class="filters" aria-label="Gallery filters">
+      {galleryCategories.map((category) => {
+        const isCurrent = category.id === 'all';
+        const href = category.id === 'all' ? '/gallery' : `/gallery?category=${category.id}`;
+
+        return (
+          <a
+            href={href}
+            data-category={category.id}
+            class:list={['filter-link', { 'filter-link--active': isCurrent }]}
+            aria-current={isCurrent ? 'page' : undefined}
+          >
+            {category.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <section class="gallery-grid" aria-live="polite">
+      {galleryItems.map((item) => {
+        const categoryLabel = galleryCategories.find((category) => category.id === item.category)?.label ?? 'Other';
+        const image = item.images[0];
+
+        return (
+          <article class="gallery-card" data-category={item.category}>
+            <img
+              src={image.thumb}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              loading="lazy"
+              class="gallery-card__image"
+            />
+
+            <div class="gallery-card__content">
+              <p class="gallery-card__category">{categoryLabel}</p>
+              <h2>{item.title}</h2>
+              <p>{item.description}</p>
+              <a
+                class="button button--primary"
+                href={buildEnquiryMailto(
+                  `Custom enquiry about ${item.title}`,
+                  `I'd love to enquire about a custom version of "${item.title}".`
+                )}
+              >
+                Enquire about a custom version
+              </a>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+
+    <section class="general-enquiry">
+      <h2>Have something else in mind?</h2>
+      <p>
+        If you would like a variation on a piece or have an idea that is not shown
+        here, please get in touch and we can talk through the details.
+      </p>
+      <a
+        class="button button--outline"
+        href={buildEnquiryMailto(
+          'Custom enquiry',
+          'I have an idea for a custom piece and would love to discuss it.'
+        )}
+      >
+        Ask about a custom idea
+      </a>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  const filterLinks = document.querySelectorAll<HTMLAnchorElement>('.filter-link');
+  const cards = document.querySelectorAll<HTMLElement>('.gallery-card');
+
+  function applyFilter(category: string) {
+    cards.forEach((card) => {
+      card.hidden = category !== 'all' && card.dataset.category !== category;
+    });
+
+    filterLinks.forEach((link) => {
+      const isCurrent = link.dataset.category === category;
+      link.classList.toggle('filter-link--active', isCurrent);
+      if (isCurrent) {
+        link.setAttribute('aria-current', 'page');
+      } else {
+        link.removeAttribute('aria-current');
+      }
+    });
+  }
+
+  filterLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      event.preventDefault();
+      const category = link.dataset.category ?? 'all';
+      applyFilter(category);
+
+      const url = new URL(window.location.href);
+      if (category === 'all') {
+        url.searchParams.delete('category');
+      } else {
+        url.searchParams.set('category', category);
+      }
+      window.history.pushState({}, '', url);
+    });
+  });
+
+  applyFilter(new URLSearchParams(window.location.search).get('category') ?? 'all');
+</script>
+
+<style>
+  .gallery-page {
+    padding-block: 2.5rem 3rem;
+  }
+
+  .page-header {
+    max-width: 40rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .filter-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 999px;
+    padding: 0.6rem 1rem;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .filter-link--active {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  .gallery-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(53, 34, 21, 0.04);
+  }
+
+  .gallery-card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .gallery-card__content {
+    padding: 1rem 1rem 1.25rem;
+  }
+
+  .gallery-card__category {
+    margin: 0 0 0.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .gallery-card__content h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gallery-card__content p {
+    margin-bottom: 1rem;
+  }
+
+  .general-enquiry {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+    max-width: 42rem;
+  }
+</style>

@@ -21,13 +21,16 @@ import { siteConfig } from '../config/site';
         different piece, change the file name below — see the
         README for the full list of images available.
       */}
-      <img
-        src="/images/textured_hanging.jpeg"
-        alt="A handmade macramé wall hanging by Knot Perfect, featuring layered cream, tan and black fringing"
-        class="showcase__image"
-        width="1600"
-        height="1200"
-      />
+      <figure class="showcase__frame">
+        <img
+          src="/images/textured_hanging.jpeg"
+          alt="A handmade macramé wall hanging by Knot Perfect, featuring layered cream, tan and black fringing"
+          class="showcase__image"
+          width="1600"
+          height="1600"
+        />
+        <figcaption class="showcase__caption">Textured wall hanging in cream, tan and black</figcaption>
+      </figure>
     </section>
 
     <section class="intro container">
@@ -42,15 +45,15 @@ import { siteConfig } from '../config/site';
       <div class="button-group">
         <SocialButton href={siteConfig.etsyUrl} label="Shop on Etsy" variant="primary" />
         <SocialButton href={siteConfig.facebookUrl} label="Find us on Facebook" variant="outline" />
+        <SocialButton href={siteConfig.instagramUrl} label="Follow us on Instagram" variant="outline" />
       </div>
       <p class="cta__email">
         Or email me directly:
         <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>
       </p>
-    </section>
-
-    <section class="coming-soon container">
-      <p>Full website coming soon — thank you for your patience!</p>
+      <div class="button-group button-group--secondary">
+        <a class="button button--outline" href="/gallery">View recent work</a>
+      </div>
     </section>
   </main>
 
@@ -75,6 +78,14 @@ import { siteConfig } from '../config/site';
 
   .showcase {
     padding-block: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .showcase__frame {
+    margin: 0;
+    width: 100%;
+    max-width: 26rem;
   }
 
   .showcase__image {
@@ -84,14 +95,28 @@ import { siteConfig } from '../config/site';
     box-shadow: 0 8px 24px rgba(62, 51, 43, 0.12);
   }
 
+  .showcase__caption {
+    margin-top: 0.75rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+  }
+
   .intro {
     padding-block: 2rem;
     max-width: 40rem;
+    margin-inline: auto;
     font-size: 1.05rem;
+    text-align: center;
   }
 
   .cta {
-    padding-block: 1.5rem;
+    padding-block: 1.5rem 3rem;
+    text-align: center;
+  }
+
+  .cta .button-group {
+    justify-content: center;
   }
 
   .cta__email {
@@ -99,10 +124,8 @@ import { siteConfig } from '../config/site';
     color: var(--color-text-muted);
   }
 
-  .coming-soon {
-    padding-block: 2rem 3rem;
-    font-style: italic;
-    color: var(--color-text-muted);
+  .button-group--secondary {
+    margin-top: 1rem;
   }
 
   @media (min-width: 40rem) {

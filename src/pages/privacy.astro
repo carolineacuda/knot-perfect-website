@@ -11,38 +11,87 @@ import { siteConfig } from '../config/site';
   <main class="container privacy">
     <h1>Privacy policy</h1>
 
-    <p>
-      <em
-        >This is placeholder text. Please replace it with a privacy policy
-        that accurately describes how {siteConfig.businessName} collects and
-        uses information, once the full website (and any order or contact
-        forms) is built.</em
-      >
-    </p>
+    <p class="privacy__updated"><em>Last updated: 18 October 2026.</em></p>
 
     <h2>Who we are</h2>
     <p>
       This website is run by {siteConfig.businessName}, a UK handmade
-      macramé business.
+      macramé business. This policy explains what happens to any
+      information you share with us through this website.
     </p>
 
-    <h2>Contacting us</h2>
+    <h2>What information we collect</h2>
+    <p>
+      This website does not have any sign-up, order or contact forms, so it
+      does not collect or store any personal information about you directly.
+      The buttons and links on this site either take you to an external
+      platform (Etsy, Facebook or Instagram) or open an email to us in your
+      own email app — in both cases, you choose what information to share
+      and with whom.
+    </p>
+
+    <h2>Email enquiries</h2>
     <p>
       If you contact us by email at
-      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a
-      >, we will use your email address only to reply to you.
+      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>,
+      whatever you include in that email (such as your name, email address
+      and details of your enquiry) is sent directly to our inbox. We only
+      use this information to reply to you and to discuss your enquiry or
+      order. We do not share it with third parties, and we do not use it for
+      marketing unless you ask us to. We keep enquiry emails only for as
+      long as reasonably needed to deal with your enquiry or order, and any
+      related records we are required to keep for tax purposes.
     </p>
 
     <h2>Shopping with us</h2>
     <p>
-      Purchases are currently handled entirely through our Etsy shop. Etsy's
-      own privacy policy applies to any orders placed there.
+      Purchases are currently handled entirely through our
+      <a href={siteConfig.etsyUrl} target="_blank" rel="noopener noreferrer">Etsy shop</a>.
+      Etsy processes and stores information related to your order (such as
+      payment and delivery details) under its own privacy policy, which
+      applies in addition to this one.
     </p>
 
-    <h2>Cookies</h2>
+    <h2>Social media</h2>
     <p>
-      This website does not currently use cookies or any analytics or
-      tracking tools.
+      Our <a href={siteConfig.facebookUrl} target="_blank" rel="noopener noreferrer">Facebook</a>
+      and <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a>
+      pages are hosted by Meta, not by us. If you message or interact with
+      us there, that platform's own privacy policy applies to how it
+      handles your information.
+    </p>
+
+    <h2>Cookies and analytics</h2>
+    <p>
+      This website does not use cookies, analytics or any tracking tools of
+      its own.
+    </p>
+
+    <h2>Children's privacy</h2>
+    <p>
+      This website is intended for adults and is not directed at children.
+      We do not knowingly collect information from children.
+    </p>
+
+    <h2>Your rights</h2>
+    <p>
+      Under UK data protection law, you have the right to ask what
+      information we hold about you (if any), to ask us to correct it, or to
+      ask us to delete it. To do this, just email us at
+      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
+    </p>
+
+    <h2>Changes to this policy</h2>
+    <p>
+      We may update this policy from time to time, for example if we add
+      order or contact forms to the website in future. Any changes will be
+      posted on this page.
+    </p>
+
+    <h2>Contact us</h2>
+    <p>
+      If you have any questions about this privacy policy, please email
+      <a href={`mailto:${siteConfig.contactEmail}`}>{siteConfig.contactEmail}</a>.
     </p>
   </main>
 
@@ -53,5 +102,10 @@ import { siteConfig } from '../config/site';
   .privacy {
     padding-block: 2rem 3rem;
     max-width: 42rem;
+  }
+
+  .privacy__updated {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
   }
 </style>

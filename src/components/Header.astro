@@ -6,19 +6,26 @@ import { siteConfig } from '../config/site';
   <div class="container site-header__inner">
     <a href="/" class="site-header__brand">
       {/*
-        Your logo already lives at public/images/logo.png and is used
-        here. Swap that file for a new version any time — no code
-        changes needed. See the README for details.
+        This is a tightly-cropped version of public/images/logo.png,
+        made specifically for the header. If you replace logo.png with
+        a new design, re-crop a version of it to public/images/logo-header.png
+        (trimmed to the logo artwork, no extra white space) — see the README.
       */}
       <img
-        src="/images/logo.png"
-        alt={`${siteConfig.businessName} logo`}
+        src="/images/logo-header.png"
+        alt={`${siteConfig.businessName} — ${siteConfig.tagline}`}
         class="site-header__logo"
-        width="64"
-        height="64"
+        width="992"
+        height="557"
       />
-      <span class="site-header__name">{siteConfig.businessName}</span>
+      <span class="visually-hidden">{siteConfig.businessName}</span>
     </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/">Home</a>
+      <a href="/gallery">Gallery</a>
+      <a href="/privacy">Privacy</a>
+    </nav>
   </div>
 </header>
 
@@ -31,6 +38,8 @@ import { siteConfig } from '../config/site';
   .site-header__inner {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     padding-block: 0.85rem;
   }
 
@@ -40,24 +49,48 @@ import { siteConfig } from '../config/site';
     gap: 0.75rem;
     text-decoration: none;
     color: var(--color-text);
+    min-width: 0;
   }
 
   .site-header__logo {
-    width: 3rem;
+    width: auto;
     height: 3rem;
     object-fit: contain;
-    border-radius: 50%;
   }
 
-  .site-header__name {
-    font-family: var(--font-heading);
-    font-size: 1.4rem;
-    font-weight: 700;
+  .site-nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+    margin-left: auto;
+  }
+
+  .site-nav a {
+    text-decoration: none;
+    color: var(--color-text-muted);
+    font-weight: 600;
+  }
+
+  .site-nav a:hover,
+  .site-nav a:focus-visible {
+    color: var(--color-accent-dark);
+  }
+
+  @media (max-width: 28rem) {
+    .site-header__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .site-nav {
+      margin-left: 0;
+    }
   }
 
   @media (min-width: 40rem) {
-    .site-header__name {
-      font-size: 1.65rem;
+    .site-header__logo {
+      height: 3.5rem;
     }
   }
 </style>

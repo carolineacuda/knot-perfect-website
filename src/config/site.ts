@@ -24,6 +24,9 @@ export const siteConfig = {
   // ── REPLACE ME: your real Facebook page URL ──────────────────
   facebookUrl: 'https://www.facebook.com/share/1Cw5TMmN6i/?mibextid=wwXIfr',
 
+  // ── REPLACE ME: your real Instagram page URL ──────────────────
+  instagramUrl: 'https://www.instagram.com/knot_perfect_macrame/',
+
   // ── REPLACE ME: the email address you want customers to use ──
   contactEmail: 'knotperfectuk@gmail.com',
 } as const;

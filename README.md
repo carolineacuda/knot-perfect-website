@@ -27,21 +27,58 @@ Press `Ctrl+C` in the terminal to stop the server.
 All images live in the `public/images/` folder. Anything you put there can
 be referenced in the website as `/images/your-file-name.jpg`.
 
-- **Logo**: `public/images/logo.png`. Replace this file (keep the same name)
-  to update the logo shown in the header, or change the filename referenced
-  in `src/components/Header.astro`.
-- **Homepage hero photo**: currently `public/images/textured_hanging.jpeg`,
-  shown in `src/pages/index.astro`. To feature a different piece, either:
-  - replace `textured_hanging.jpeg` with a new photo of the same name, or
+- **Logo**: `public/images/logo.png` is the full square logo (used for the
+  browser tab icon). `public/images/logo-header.png` is a tightly-cropped
+  version of the same logo, trimmed of extra white space, used in the site
+  header — a full-canvas square logo looks tiny and hard to read at header
+  size, so it's cropped separately. If you replace `logo.png` with a new
+  design, re-crop a version of it to `logo-header.png` (crop closely around
+  the artwork, no wide white margins) and keep the filenames the same, or
+  update the filenames referenced in `src/components/Header.astro` and
+  `src/layouts/Layout.astro`.
+- **Homepage hero photo**: `public/images/textured_hanging.jpeg`, shown in
+  `src/pages/index.astro`. This has been cropped to a square and resized to
+  1600×1600px so it loads quickly and fills its frame on the homepage. To
+  feature a different piece:
+  - replace `textured_hanging.jpeg` with a new photo of the same name
+    (crop it to roughly square first, and keep it to around 1600px wide —
+    a phone photo straight from the camera is usually several megabytes
+    and will slow the site down), or
   - edit the `src="/images/..."` line in `src/pages/index.astro` to point at
     a different file already in `public/images/` (there are several other
     photos already there, e.g. `autumn_sunset_mandala.jpeg`,
-    `full_sun_mandala.jpeg`, `gold_treeoflife.jpeg`).
+    `full_sun_mandala.jpeg`, `gold_treeoflife.jpeg`) — note these spare
+    photos are still full camera-resolution and haven't been cropped or
+    resized, so give one the same treatment before using it as the hero.
 
-Large photos will slow the site down — a good size for the hero photo is
-around 1600px wide.
+## 3. Gallery image preparation and catalogue
 
-## 3. Where to change the text and links
+The project now includes a simple gallery catalogue and a helper script for
+preparing website images from your design folder.
+
+- **Source photo folder**: `/Users/carolineacuda/Claude/Projects/knot_perfect_website/website photos`
+- **Gallery data**: `src/data/gallery.ts`
+- **Gallery page**: `src/pages/gallery.astro`
+- **Prepared public images**: `public/gallery/`
+- **Helper script**: `scripts/prepare-gallery-assets.py`
+
+To generate optimised gallery images from the source folder, run:
+
+```bash
+python3 scripts/prepare-gallery-assets.py
+```
+
+This keeps the original files in the design folder untouched and creates
+public versions in `public/gallery/` that are ready for the website. Use
+`--force` if you want to overwrite existing generated files.
+
+If you want to change the visible gallery items, edit the entries in
+`src/data/gallery.ts`. Each item has a stable ID, a category, a short
+summary and a list of image paths with alt text.
+
+The review notes for initial grouping choices live in `gallery-review.md`.
+
+## 4. Where to change the text and links
 
 - **Etsy link, Facebook link and email address**: all three live in one
   place, `src/config/site.ts`. Open that file and replace the three
@@ -55,7 +92,7 @@ around 1600px wide.
 - **Colours**: edit the values at the top of `src/styles/global.css` under
   `:root`.
 
-## 4. Building the production version
+## 5. Building the production version
 
 When you're ready to publish the site, run:
 
@@ -78,13 +115,19 @@ npm run preview
 ```
 src/
   config/site.ts       ← Etsy / Facebook / email — edit here
+  data/gallery.ts      ← gallery items, categories and image metadata
   layouts/Layout.astro ← shared page shell (meta tags, page title)
   components/          ← Header, Footer, SocialButton
   pages/
     index.astro         ← homepage
+    gallery.astro       ← gallery page with category filters
     privacy.astro       ← privacy page
   styles/global.css     ← colours, fonts, layout
-public/images/          ← logo and photographs
+public/
+  images/               ← logo and homepage photographs
+  gallery/              ← generated gallery images for the website
+scripts/
+  prepare-gallery-assets.py ← creates optimised gallery assets
 ```
 
 ## Still to do before publishing
